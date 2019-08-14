@@ -1,0 +1,68 @@
+import os.path
+import random
+
+passWord = str(random.randint(0, 100))
+guess = ''
+var = ''
+
+
+def ban():
+    os.rename('hosts_ban', 'temp')
+    os.rename('hosts', 'hosts_clean')
+    os.rename('temp', 'hosts')
+
+
+def unban():
+    os.rename('hosts_clean', 'temp')
+    os.rename('hosts', 'hosts_ban')
+    os.rename('temp', 'hosts')
+
+
+while guess != passWord:
+    guess = (input("Password: "))
+    try:
+        int(guess)
+
+    except ValueError:
+        print("Please enter an integer.")
+
+# Set directory to host files
+os.chdir('C:\Windows\System32\drivers\etc')
+
+while var != "b" or "u":
+    # Receive input on whether to ban on unban
+    var = input("Ban or unban? (b/u): ")
+
+    # user chooses to ban
+    if var == "b":
+
+        # ban user unless already banned
+        if os.path.exists('hosts_ban'):
+            try:
+                ban()
+            except PermissionError:
+                print("Please launch with administrator privileges.")
+                quit()
+            print("You have been banned.")
+            quit()
+        else:
+            print("You are already banned.")
+
+    # user chooses to unban
+    elif var == "u":
+
+        # unban user unless already unbanned
+        if os.path.exists('hosts_clean'):
+            try:
+                unban()
+            except PermissionError:
+                print("Please launch with administrator privileges.")
+                quit()
+            print("You have been unbanned.")
+            quit()
+        else:
+            print("You are already unbanned.")
+
+    # notify user to use "b" and "u" to choose an option
+    else:
+        print("Invalid choice. Type \"b\" to ban, and \"u\" to unban.")
