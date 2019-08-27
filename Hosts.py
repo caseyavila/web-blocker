@@ -1,4 +1,5 @@
 import os.path
+import os
 import random
 
 passWord = str(random.randint(0, 100))
@@ -41,10 +42,10 @@ while var != "b" or "u":
             try:
                 ban()
             except PermissionError:
-                print("Please launch with administrator privileges.")
-                quit()
-            print("You have been banned.")
-            quit()
+                wait = input("Please launch with administrator privileges, press ENTER to terminate.")
+                raise SystemExit()
+            input("You have been banned, press ENTER to terminate.")
+            raise SystemExit()
         else:
             print("You are already banned.")
 
@@ -56,10 +57,10 @@ while var != "b" or "u":
             try:
                 unban()
             except PermissionError:
-                print("Please launch with administrator privileges.")
-                quit()
-            print("You have been unbanned.")
-            quit()
+                input("Please launch with administrator privileges, press ENTER to terminate.")
+                raise SystemExit()
+            input("You have been unbanned, press ENTER to terminate.")
+            raise SystemExit()
         else:
             print("You are already unbanned.")
 
