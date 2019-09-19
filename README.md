@@ -1,5 +1,5 @@
 # WebBlocker
-A Python 3 website blocker that allows users to toggle between a state of "banned" (where users are prevented from accessing a selection of websites) and "unbanned" (where users are not blocked from any websites). This blocker utilizes the `Hosts` file in Windows to operate.
+A Python 3 website blocker that allows users to toggle between a state of "blocked" (where users are prevented from accessing a selection of websites) and "unblocked" (where users are not blocked from any websites). This blocker utilizes the `Hosts` file in Windows to operate.
 
 ## Prerequisites
 Create a copy of your `Hosts` file (in the same directory) with the name `hosts_ban`. This file should contain the websites that intend to be blocked.
