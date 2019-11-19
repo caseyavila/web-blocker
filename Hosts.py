@@ -18,14 +18,15 @@ def unban():
     os.rename('hosts', 'hosts_ban')
     os.rename('temp', 'hosts')
 
+def password():
+    global guess, var
+    while guess != passWord:
+        guess = (input("Password: "))
+        try:
+            int(guess)
 
-while guess != passWord:
-    guess = (input("Password: "))
-    try:
-        int(guess)
-
-    except ValueError:
-        print("Please enter an integer.")
+        except ValueError:
+            print("Please enter an integer.")
 
 # Set directory to host files
 os.chdir('C:\Windows\System32\drivers\etc')
@@ -51,6 +52,7 @@ while var != "b" or "u":
 
     # user chooses to unban
     elif var == "u":
+        password() # prompt password
 
         # unban user unless already unbanned
         if os.path.exists('hosts_clean'):
