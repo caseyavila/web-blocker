@@ -6,3 +6,6 @@ Create a copy of your `Hosts` file (in the same directory) with the name `hosts_
 
 ## Notes
 This program is intended to provide a wall between the user and directly editing the hosts file to ensure that blocked websites can not be unblocked within a short amount of time, rendering the blocking useless. This is achieved by requiring the user to guess a randomly-generated integer "password" between the numbers 1 - 99. By editing the source code, a user can change the range of the password, consequently changing the average time needed to edit the hosts file.
+
+## Building
+`pyinstaller -i icon.ico --uac-admin Hosts.py`
