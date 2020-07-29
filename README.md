@@ -1,4 +1,4 @@
-# WebBlocker
+# web-blocker
 A Python 3 website blocker that allows users to toggle between a state of "blocked" (where users are prevented from accessing a selection of websites) and "unblocked" (where users are not blocked from any websites). This blocker utilizes the `Hosts` file in Windows to operate.
 
 ## Prerequisites
