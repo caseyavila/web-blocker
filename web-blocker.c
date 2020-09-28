@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void guessing();
+void guessing(int password);
 void block();
 void unblock();
 
