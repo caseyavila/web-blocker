@@ -1,4 +1,4 @@
 CC?=gcc
 
-hosts: hosts.c
-	$(CC) -o hosts hosts.c
+web-blocker: web-blocker.c
+	$(CC) -o web-blocker web-blocker.c
