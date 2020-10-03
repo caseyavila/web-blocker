@@ -3,8 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-#define HOSTS_DIRECTORY "/etc"
-#define HOSTS "hosts"
+#define HOSTS "/etc/hosts"
+#define HOSTS_TMP "/etc/hosts.tmp"
 
 void guessing(int password);
 void block();
@@ -15,8 +15,6 @@ int main() {
     char url[255];
 
     srand(time(NULL));
-
-    chdir(HOSTS_DIRECTORY);
 
     printf("Do you want to block or unblock a website? [b/u] ");
     if (fgets(decision, sizeof(decision), stdin)) {
@@ -96,7 +94,7 @@ void unblock(char *url) {
     FILE *file_new;
     char line[255];
 
-    file_new = fopen("hosts.tmp", "w");
+    file_new = fopen(HOSTS_TMP, "w");
     if (file_new == NULL) {
         perror("Could not edit hosts file");
     } else {
@@ -110,7 +108,7 @@ void unblock(char *url) {
         fclose(file_new);
         fclose(file);
 
-        rename("hosts.tmp", "hosts");
+        rename(HOSTS_TMP, HOSTS);
     }
 }
 
