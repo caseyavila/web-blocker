@@ -12,7 +12,7 @@ void unblock();
 
 int main() {
     char decision[255];
-    char url[255];
+    char domain[255];
 
     srand(time(NULL));
 
@@ -27,19 +27,19 @@ int main() {
         case 'U':
         case 'u':
             guessing(rand() % 100);
-            printf("Type the url you want to unblock: ");
-            if (fgets(url, sizeof(url), stdin)) {
-                url[strcspn(url, "\n")] = 0;
-                unblock(url);
+            printf("Type the domain you want to unblock: ");
+            if (fgets(domain, sizeof(domain), stdin)) {
+                domain[strcspn(domain, "\n")] = 0;
+                unblock(domain);
             }
             break;
 
         case 'B':
         case 'b':
-            printf("Type the url you want to block: ");
-            if (fgets(url, sizeof(url), stdin)) {
-                url[strcspn(url, "\n")] = 0;
-                block(url);
+            printf("Type the domain you want to block: ");
+            if (fgets(domain, sizeof(domain), stdin)) {
+                domain[strcspn(domain, "\n")] = 0;
+                block(domain);
             }
             break;
 
@@ -66,14 +66,14 @@ void guessing(int password) {
     }
 }
 
-void block(char *url) {
+void block(char *domain) {
     FILE *file;
     char line[255];
 
     file = fopen(HOSTS, "r");
     while (fgets(line, sizeof(line), file) != NULL) {
-        if (strstr(line, url) != NULL && strstr(line, "127.0.0.1") != NULL && line[0] != '#') {
-            printf("%s is already blocked!\n", url);
+        if (strstr(line, domain) != NULL && strstr(line, "127.0.0.1") != NULL && line[0] != '#') {
+            printf("%s is already blocked!\n", domain);
             return;
         }
     }
@@ -84,12 +84,12 @@ void block(char *url) {
     if (file == NULL) {
         perror("Could not edit hosts file");
     } else {
-        fprintf(file, "127.0.0.1 %s\n", url);
+        fprintf(file, "127.0.0.1 %s\n", domain);
         fclose(file);
     }
 }
 
-void unblock(char *url) {
+void unblock(char *domain) {
     FILE *file;
     FILE *file_new;
     char line[255];
@@ -100,7 +100,7 @@ void unblock(char *url) {
     } else {
         file = fopen(HOSTS, "r");
         while (fgets(line, sizeof(line), file) != NULL) {
-            if ((strstr(line, url) == NULL && strstr(line, "127.0.0.1") == NULL) || line[0] == '#') {
+            if ((strstr(line, domain) == NULL && strstr(line, "127.0.0.1") == NULL) || line[0] == '#') {
                 fprintf(file_new, "%s", line);
             }
         }
