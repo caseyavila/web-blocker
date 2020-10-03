@@ -4,6 +4,16 @@ A simple program to block websites through the host file; the project that intro
 ## Building
 Simply run `make` in the repository directory.
 
+### Install
+```
+# make install
+```
+
+### Uninstall
+```
+# make uninstall
+```
+
 ## Notes
 This script simply makes and deletes entries in the hosts file as following:
 ```
