@@ -1,4 +1,4 @@
-# web-blocker
+# web-blocker ![C/C++ CI](https://github.com/caseyavila/web-blocker/workflows/C/C++%20CI/badge.svg)
 A simple program to block websites through the host file; the project that introduced me to programming. Originally in Python 3, rewritten in C.
 
 ## Building
