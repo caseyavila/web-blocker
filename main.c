@@ -5,6 +5,7 @@
 
 #define HOSTS "/etc/hosts"
 #define HOSTS_TMP "/etc/hosts.tmp"
+#define BLOCK_IP "127.0.0.1"
 
 void user_input(char buffer[], size_t buffer_size, char *prompt);
 void guessing(int password);
@@ -22,7 +23,7 @@ int main() {
     switch (*decision) {
         case 'U':
         case 'u':
-            guessing(rand() % 100);
+            /*guessing(rand() % 100);*/
             user_input(domain, sizeof(domain), "Type the domain you want to unblock: ");
             unblock(domain);
             break;
@@ -68,7 +69,7 @@ void block(char *domain) {
 
     file = fopen(HOSTS, "r");
     while (fgets(line, sizeof(line), file) != NULL) {
-        if (strstr(line, domain) != NULL && strstr(line, "127.0.0.1") != NULL && line[0] != '#') {
+        if (strstr(line, domain) != NULL && strstr(line, BLOCK_IP) != NULL && line[0] != '#') {
             printf("%s is already blocked!\n", domain);
             return;
         }
@@ -80,7 +81,7 @@ void block(char *domain) {
     if (file == NULL) {
         perror("Could not edit hosts file");
     } else {
-        fprintf(file, "127.0.0.1 %s\n", domain);
+        fprintf(file, "%s %s\n", BLOCK_IP, domain);
         fclose(file);
     }
 }
@@ -96,7 +97,7 @@ void unblock(char *domain) {
     } else {
         file = fopen(HOSTS, "r");
         while (fgets(line, sizeof(line), file) != NULL) {
-            if ((strstr(line, domain) == NULL && strstr(line, "127.0.0.1") != NULL) || line[0] == '#') {
+            if (strstr(line, domain) == NULL || strstr(line, BLOCK_IP) == NULL || line[0] == '#') {
                 fprintf(file_new, "%s", line);
             }
         }

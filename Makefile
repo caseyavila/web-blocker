@@ -1,8 +1,8 @@
 CC?=gcc
 CFLAGS+=-Wall -pedantic -std=c89
 
-web-blocker: web-blocker.c
-	$(CC) $(CFLAGS) -o web-blocker web-blocker.c
+web-blocker: main.c
+	$(CC) $(CFLAGS) -o web-blocker main.c
 
 clean:
 	rm -f web-blocker
