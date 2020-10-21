@@ -96,7 +96,7 @@ void unblock(char *domain) {
     } else {
         file = fopen(HOSTS, "r");
         while (fgets(line, sizeof(line), file) != NULL) {
-            if ((strstr(line, domain) == NULL && strstr(line, "127.0.0.1") == NULL) || line[0] == '#') {
+            if ((strstr(line, domain) == NULL && strstr(line, "127.0.0.1") != NULL) || line[0] == '#') {
                 fprintf(file_new, "%s", line);
             }
         }
