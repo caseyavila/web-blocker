@@ -23,7 +23,7 @@ int main() {
     switch (*decision) {
         case 'U':
         case 'u':
-            /*guessing(rand() % 100);*/
+            guessing(rand() % 100);
             user_input(domain, sizeof(domain), "Type the domain you want to unblock: ");
             unblock(domain);
             break;
