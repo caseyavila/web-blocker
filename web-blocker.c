@@ -6,6 +6,7 @@
 #define HOSTS "/etc/hosts"
 #define HOSTS_TMP "/etc/hosts.tmp"
 
+void user_input(char buffer[], size_t buffer_size, char *prompt);
 void guessing(int password);
 void block();
 void unblock();
@@ -16,31 +17,20 @@ int main() {
 
     srand(time(NULL));
 
-    printf("Do you want to block or unblock a website? [b/u] ");
-    if (fgets(decision, sizeof(decision), stdin)) {
-        decision[strcspn(decision, "\n")] = 0;
-    } else {
-        return 0;
-    }
+    user_input(decision, sizeof(decision), "Do you want to block or unblock a website? [b/u] ");
 
     switch (*decision) {
         case 'U':
         case 'u':
             guessing(rand() % 100);
-            printf("Type the domain you want to unblock: ");
-            if (fgets(domain, sizeof(domain), stdin)) {
-                domain[strcspn(domain, "\n")] = 0;
-                unblock(domain);
-            }
+            user_input(domain, sizeof(domain), "Type the domain you want to unblock: ");
+            unblock(domain);
             break;
 
         case 'B':
         case 'b':
-            printf("Type the domain you want to block: ");
-            if (fgets(domain, sizeof(domain), stdin)) {
-                domain[strcspn(domain, "\n")] = 0;
-                block(domain);
-            }
+            user_input(domain, sizeof(domain), "Type the domain you want to block: ");
+            block(domain);
             break;
 
         default:
@@ -51,15 +41,21 @@ int main() {
     return 0;
 }
 
+void user_input(char buffer[], size_t buffer_size, char *prompt) {
+    printf("%s", prompt);
+    if (fgets(buffer, buffer_size, stdin) != NULL) {
+        /* Remove trailing newline */
+        buffer[strcspn(buffer, "\n")] = 0;
+    } else {
+        fprintf(stderr, "Invalid input, exiting...\n");
+        exit(1);
+    }
+}
+
 void guessing(int password) {
     char guess[255];
     
-    printf("Password: ");
-    if (fgets(guess, sizeof(guess), stdin)) {
-        guess[strcspn(guess, "\n")] = 0;
-    } else {
-        exit(0);
-    }
+    user_input(guess, sizeof(guess), "Password: ");
 
     if (atoi(guess) != password) {
         guessing(password);
