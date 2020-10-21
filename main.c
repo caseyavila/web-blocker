@@ -7,6 +7,7 @@
 #define HOSTS_TMP "/etc/hosts.tmp"
 #define BLOCK_IP "127.0.0.1"
 
+void display_blocked();
 void user_input(char buffer[], size_t buffer_size, char *prompt);
 void guessing(int password);
 void block();
@@ -18,6 +19,7 @@ int main() {
 
     srand(time(NULL));
 
+    display_blocked();
     user_input(decision, sizeof(decision), "Do you want to block or unblock a website? [b/u] ");
 
     switch (*decision) {
@@ -40,6 +42,29 @@ int main() {
     }
 
     return 0;
+}
+
+void display_blocked() {
+    FILE *file;
+    char line[255];
+    char *token;
+
+    printf("The following domains are currently blocked:\n\n");
+
+    file = fopen(HOSTS, "r");
+    while (fgets(line, sizeof(line), file) != NULL) {
+        if (line != NULL) {
+            line[strcspn(line, "\n")] = 0;
+            if (strstr(line, BLOCK_IP) != NULL && line[0] != '#') {
+                token = strrchr(line, ' ');
+                if (strcmp(token + 1, "localhost") != 0) {
+                    printf("    - %s\n", token + 1);
+                }
+            }
+        }
+    }
+
+    printf("\n");
 }
 
 void user_input(char buffer[], size_t buffer_size, char *prompt) {
