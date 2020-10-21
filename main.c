@@ -3,9 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-#define HOSTS "/etc/hosts"
-#define HOSTS_TMP "/etc/hosts.tmp"
-#define BLOCK_IP "127.0.0.1"
+#include "config.h"
 
 void display_blocked();
 void user_input(char buffer[], size_t buffer_size, char *prompt);
