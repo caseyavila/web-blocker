@@ -111,24 +111,31 @@ void block(char *domain) {
 
 void unblock(char *domain) {
     FILE *file;
-    FILE *file_new;
+    FILE *file_tmp;
     char line[255];
 
-    file_new = fopen(HOSTS_TMP, "w");
-    if (file_new == NULL) {
+    /* Use r+ instead of r here to check for write permissions */
+    file = fopen(HOSTS, "r+");
+    file_tmp = tmpfile();
+
+    if (file == NULL || file_tmp == NULL) {
         perror("Could not edit hosts file");
     } else {
-        file = fopen(HOSTS, "r");
         while (fgets(line, sizeof(line), file) != NULL) {
             if (strstr(line, domain) == NULL || strstr(line, BLOCK_IP) == NULL || line[0] == '#') {
-                fprintf(file_new, "%s", line);
+                fprintf(file_tmp, "%s", line);
             }
         }
 
-        fclose(file_new);
-        fclose(file);
+        rewind(file_tmp);
+        freopen(NULL, "w+", file);
 
-        rename(HOSTS_TMP, HOSTS);
+        /* Copy temporary file contents to main hosts file */
+        while (fgets(line, sizeof(line), file_tmp) != NULL) {
+            fprintf(file, "%s", line);
+        }
+
+        fclose(file);
+        fclose(file_tmp);
     }
 }
-
