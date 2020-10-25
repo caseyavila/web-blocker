@@ -5,7 +5,6 @@ A simple program to block websites through the host file; the project that intro
 To configure the program, edit `config.h` to include the following:
 
 - location of your hosts file
-- location where a temporary hosts file can be stored
 - ip that should be used for blocking domains
 
 The default configuration is for a Unix-like system, though edits should *theoretically* make it MS Windows compatible (though I have not tested this).
