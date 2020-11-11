@@ -7,7 +7,7 @@ To configure the program, edit `config.h` to include the following:
 - location of your hosts file
 - ip that should be used for blocking domains
 
-The default configuration is for a Unix-like system, though edits should *theoretically* make it MS Windows compatible (though I have not tested this).
+The default configuration is for a Unix-like system, though simply editing the location of the hosts file should *theoretically* make it MS Windows compatible (though I have not tested this).
 
 After configuring, rebuild/reinstall.
 
