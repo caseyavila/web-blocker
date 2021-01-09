@@ -16,5 +16,5 @@ unblock :: Int -> IO ()
 unblock password = do
     guess <- prompt "Password: "
     if (read guess :: Int) == password
-        then putStrLn "nice"
+        then putStrLn "Correct password"
         else unblock password
