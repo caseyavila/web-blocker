@@ -1,3 +1,4 @@
+import System.IO
 import System.Random
 
 main = do
@@ -10,6 +11,7 @@ main = do
 prompt :: String -> IO String
 prompt text = do
     putStr text
+    hFlush stdout
     getLine
 
 unblock :: Int -> IO ()
