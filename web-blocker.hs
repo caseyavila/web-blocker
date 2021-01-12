@@ -26,13 +26,14 @@ unblock :: IO ()
 unblock = do
     handle <- openFile "hosts" ReadMode
     contents <- hGetContents handle 
-    print $ map findDomain (unCommented contents)
+    print $ map domain (blocked $ unCommented contents)
     hClose handle
 
 
 unCommented :: String -> [String]
 unCommented input = stringKiller $ lines input 
 
+-- Reduce to non-commented and non-blank lines
 stringKiller :: [String] -> [String]
 stringKiller [] = []
 stringKiller (x : xs)
@@ -40,5 +41,9 @@ stringKiller (x : xs)
     | head x == '#' = stringKiller xs
     | otherwise = x : stringKiller xs
 
-findDomain :: String -> String
-findDomain line = head $ words line
+domain :: String -> String
+domain line = last $ words line
+
+-- Get the lines that contain blocked domains
+blocked :: [String] -> [String]
+blocked list = filter (\n -> head (words n) == "127.0.0.1") list
