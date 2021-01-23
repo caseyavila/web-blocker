@@ -6,7 +6,7 @@ main = do
     password <- randomRIO (1, 100) :: IO Int
     choice <- prompt "Do you want to block or unblock a website? [b/u] "
     case choice of
-        "b" -> putStrLn "Blocking password..."
+        "b" -> block
         "u" -> guessing password
 
 prompt :: String -> IO String
@@ -22,13 +22,17 @@ guessing password = do
         then putStrLn "Correct password"
         else guessing password
 
+block :: IO ()
+block = do
+    domain <- prompt "Which domain would you like to block? "
+    putStrLn $ "Blocking: " ++ domain
+
 unblock :: IO ()
 unblock = do
     handle <- openFile "hosts" ReadMode
     contents <- hGetContents handle 
     print $ map domain (blocked $ unCommented contents)
     hClose handle
-
 
 unCommented :: String -> [String]
 unCommented input = stringKiller $ lines input 
