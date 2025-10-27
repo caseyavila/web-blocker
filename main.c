@@ -50,21 +50,24 @@ char *get_domain(char *line) {
         line++;
     }
 
+    /* find start of domain */
     char *domain = line + sizeof(BLOCK_IP) - 1;
     while (isspace(*domain)) {
         domain++;
     }
     size_t domain_size = strlen(domain);
+    /* find end of domain */
+    while (isspace(domain[domain_size - 1])) {
+        domain_size--;
+    }
 
     char *buffer = malloc(domain_size + 1);
     if (buffer == NULL) {
         perror("malloc");
         exit(EXIT_FAILURE);
     }
-    strcpy(buffer, domain);
-
-    /* remove trailing newline */
-    *strchr(buffer, '\n') = 0;
+    strncpy(buffer, domain, domain_size);
+    buffer[domain_size] = '\0';
 
     return buffer;
 }
