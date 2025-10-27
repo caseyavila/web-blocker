@@ -51,13 +51,11 @@ void display_blocked() {
 
     file = fopen(HOSTS, "r");
     while (fgets(line, sizeof(line), file) != NULL) {
-        if (line != NULL) {
-            line[strcspn(line, "\n")] = 0;
-            if (strstr(line, BLOCK_IP) != NULL && line[0] != '#') {
-                token = strrchr(line, ' ');
-                if (strcmp(token + 1, "localhost") != 0) {
-                    printf("    - %s\n", token + 1);
-                }
+        line[strcspn(line, "\n")] = 0;
+        if (strstr(line, BLOCK_IP) != NULL && line[0] != '#') {
+            token = strrchr(line, ' ');
+            if (strcmp(token + 1, "localhost") != 0) {
+                printf("    - %s\n", token + 1);
             }
         }
     }
