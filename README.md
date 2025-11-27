@@ -1,8 +1,8 @@
-# web-blocker ![C/C++ CI](https://github.com/caseyavila/web-blocker/workflows/C/C++%20CI/badge.svg)
-A simple program to block websites through the host file; the project that introduced me to programming. Originally in Python 3, rewritten in C.
+# web-blocker
+A simple program to block websites through the hosts file; the project that introduced me to programming. Originally in Python 3, rewritten in C.
 
 ## Configuration
-To configure the program, edit `config.h` to include the following:
+To configure the program, edit `main.c` to include the following:
 
 - location of your hosts file
 - ip that should be used for blocking domains
@@ -25,8 +25,8 @@ Simply run `make` in the repository directory.
 ```
 
 ## Notes
-This script simply makes and deletes entries in the hosts file as following:
+This script simply comments and uncomments already-present entries in the hosts file:
 ```
-127.0.0.1 <blocked_url>  # This ip can be edited; see Configuration
+127.0.0.1   <blocked domain>
+#127.0.0.1  <unblocked domain>
 ```
-If you would like to use a different ip-address, simply change its occurances in the source code and rebuild.
