@@ -145,19 +145,17 @@ char *input(char *prompt) {
 
 void guessing() {
     char *guess = NULL;
-    int password = rand() % 100;
+    long password = rand() % 100;
 
     do {
         free(guess);
         guess = input("Password: ");
-    } while (atoi(guess) != password);
+    } while (strtol(guess, NULL, 10) != password);
 
     free(guess);
 }
 
 void save(FILE *hosts_file, struct entry *entries, size_t num_entries) {
-    struct entry *curr_entry = entries;
-
     rewind(hosts_file);
 
     FILE *tmp_file = fopen(TEMP, "w");
@@ -166,6 +164,7 @@ void save(FILE *hosts_file, struct entry *entries, size_t num_entries) {
         exit(EXIT_FAILURE);
     }
 
+    struct entry *curr_entry = entries;
     size_t line_num = 0;
     char *line;
     while ((line = read_line(hosts_file)) != NULL) {
@@ -178,7 +177,9 @@ void save(FILE *hosts_file, struct entry *entries, size_t num_entries) {
             fputs(curr_entry->domain, tmp_file);
             fputs("\n", tmp_file);
 
-            curr_entry++;
+            if (curr_entry < entries + num_entries - 1) {
+                curr_entry++;
+            }
         } else {
             fputs(line, tmp_file);
         }
@@ -240,7 +241,7 @@ int main() {
 
     fputs(curr_entry->domain, stdout);
     fputs(" is now ", stdout);
-    fputs(curr_entry->blocked ? "blocked.\n" : "unblocked.\n", stdout);
+    puts(curr_entry->blocked ? "blocked." : "unblocked.");
 
     free_entries(entries, num_entries);
 
