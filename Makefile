@@ -1,5 +1,5 @@
 CC ?= gcc
-CFLAGS += -Wall -pedantic -std=c99
+CFLAGS += -Wall -pedantic -std=c99 -g
 
 web-blocker: main.c
 	$(CC) $(CFLAGS) -o web-blocker main.c
